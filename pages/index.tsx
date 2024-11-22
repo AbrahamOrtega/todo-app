@@ -2,6 +2,7 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import TodoModel from "@/models/TodoModel";
 import { DndContext, closestCenter } from "@dnd-kit/core";
+import { DragEndEvent } from "@dnd-kit/core";
 import {
   SortableContext,
   verticalListSortingStrategy,
@@ -153,13 +154,13 @@ export default function Home() {
 
   /// Handle Drag End
 
-  const handleDragEnd = (event) => {
+  const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
 
-    if (active.id !== over.id) {
+    if (active.id !== over?.id) {
       setTodoList((todo) => {
         const oldIndex = todo.findIndex((todo) => todo.id === active.id);
-        const newIndex = todo.findIndex((todo) => todo.id === over.id);
+        const newIndex = todo.findIndex((todo) => todo.id === over?.id);
 
         return arrayMove(todo, oldIndex, newIndex);
       });
